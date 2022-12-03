@@ -27,7 +27,7 @@
 - [React-hook-form](https://react-hook-form.com)
 - [Zod](https://github.com/colinhacks/zod)
 - [ContextAPI](https://reactjs.org/docs/context.html)
-
+- [Axios](https://axios-http.com/docs/intro)
 <h3>BACK-END</h3>
 
 - [NodeJs](https://nodejs.org/en/)
