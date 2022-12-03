@@ -10,6 +10,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Roboto:wght@300;400;500;700&display=swap"
           rel="stylesheet"
         />
+       
       </Head>
       <body className="bg-gray-900 bg-app bg-no-repeat bg-cover">
         <Main />

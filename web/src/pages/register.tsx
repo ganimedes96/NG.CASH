@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
@@ -14,6 +15,10 @@ export default function Home() {
   };
 
   return (
+    <>
+    <Head>
+      <title>NG.CASH - Register</title>
+    </Head>
     <div className="max-w-[1124px] w-full h-screen mx-auto grid grid-cols-2 justify-between items-center gap-28">
       <main>
         <Link href="/">
@@ -26,7 +31,7 @@ export default function Home() {
           <div className="flex items-center gap-6 ">
             <Image src={CheckImg} alt="" />
             <div className="flex flex-col">
-              <span className="font-bold text-2xl">+50000</span>
+              <span className="font-bold text-2xl">+5000</span>
               <span>Contas criatas</span>
             </div>
           </div>
@@ -60,7 +65,7 @@ export default function Home() {
           className="w-full p-4  rounded bg-gray-800 border border-gray-400 text-sm text-gray-100 placeholder:text-gray-300"
           type="text"
           required
-          placeholder="Digite sua password"
+          placeholder="Digite seu password"
         />
         {error && <p className="text-red-600 mt-1">{error}</p>}
         <button
@@ -71,5 +76,6 @@ export default function Home() {
         </button>
       </form>
     </div>
+    </>
   );
 }

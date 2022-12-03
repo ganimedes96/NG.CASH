@@ -1,9 +1,10 @@
-import { IAccountInfo } from "../interfaces/IUser";
+import { IAccountInfo, IUser } from "../interfaces/IUser";
 import { PrismaClient } from "@prisma/client";
 import { ITransaction, IAllTransaction } from "../interfaces/ITransaction";
+import moment from "moment";
 
 export default class TransactionService {
-  public transaction = async (
+  public transactions = async (
     shippingData: IAccountInfo,
     receiptData: IAccountInfo,
     amount: number
@@ -49,26 +50,23 @@ export default class TransactionService {
     });
   };
 
-  public getTransactions = async (user: IAccountInfo):Promise<IAllTransaction[]> => {
+  public getTransactions = async (
+    user: IAccountInfo
+  ): Promise<IAllTransaction[]> => {
     const prisma = new PrismaClient();
-    const transactions = await prisma.transactions.findMany({
+    const transactions = (await prisma.transactions.findMany({
       where: {
         OR: [
           {
             creditedAccountId: user.accountId,
-            
           },
           { debitedAccountId: user.accountId },
         ],
       },
-      orderBy:{createdAt: 'desc'},
+      orderBy: { createdAt: "desc" },
       include: {
-
-        
         debitAccount: {
-         
           select: {
-            
             id: true,
             User: {
               select: {
@@ -91,7 +89,33 @@ export default class TransactionService {
           },
         },
       },
-    }) as unknown as IAllTransaction[];
+    })) as unknown as IAllTransaction[];
     return transactions;
+  };
+
+  public filterTransactions = async (
+    userData: IUser,
+    date: string,
+    filter: string
+  ): Promise<IAllTransaction[]> => {
+    const transactions = await this.getTransactions(userData);
+    switch (filter) {
+      case "cash-in":
+        return transactions.filter(
+          (transaction) => transaction.creditedAccountId === userData.accountId
+        );
+      case "cash-out":
+        return transactions.filter(
+          (transaction) => transaction.debitedAccountId === userData.accountId
+        );
+      case "date":
+        return transactions.filter(
+          (transaction) =>
+            moment(transaction.createdAt).format("YYYY-MM-DD") === date
+        );
+
+      default:
+        return transactions;
+    }
   };
 }

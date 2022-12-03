@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import Router from "next/router";
 import { parseCookies, destroyCookie } from "nookies";
@@ -17,6 +18,9 @@ export default function Dashboard() {
 
   return (
     <>
+    <Head>
+      <title>NG.CASH - Dashboard</title>
+    </Head>
       <header className="w-full max-w-[1120px] mx-auto flex items-center justify-between p-9">
         <Link href="/">
           <h1 className="font-light text-4xl text-gray-100">NG.CASH</h1>

@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { IDecode, IUser } from "../interfaces/IUser";
 import UserService from "../services/user";
-import jwt from "../utils/jwt";
 import { tokenUsername } from "../utils/tokenUsername";
 
 export default class UserController {

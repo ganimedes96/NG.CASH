@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
@@ -17,6 +18,10 @@ export default function Home() {
   };
 
   return (
+    <>
+    <Head>
+      <title>NG.CASH - Home</title>
+    </Head>
     <div className="max-w-[1124px] w-full h-screen mx-auto grid grid-cols-2 justify-between items-center gap-28">
       <main>
         <h2 className="font-light text-4xl text-gray-100">NG.CASH</h2>
@@ -33,7 +38,7 @@ export default function Home() {
           <div className="flex items-center gap-6 ">
             <Image src={CheckImg} alt="" />
             <div className="flex flex-col">
-              <span className="font-bold text-2xl">+50000</span>
+              <span className="font-bold text-2xl">+5000</span>
               <span>Contas criatas</span>
             </div>
           </div>
@@ -83,6 +88,7 @@ export default function Home() {
         </Link>
       </form>
     </div>
+    </>
   );
 }
 

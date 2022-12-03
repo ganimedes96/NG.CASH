@@ -23,11 +23,12 @@ interface sendTransaction {
 type AuthContextType = {
   user: IAccount | null;
   account: IAccount | null;
-  transactions: ITransactionInfo[] | null;
   signIn: (data: signInData) => Promise<void>;
   createUser: (data: signInData) => Promise<void>;
   newTransaction: (data: sendTransaction) => Promise<void>;
+
   error: string;
+  transactions: ITransactionInfo[];
 };
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -35,9 +36,7 @@ export const AuthContext = createContext({} as AuthContextType);
 export function AuthProvider({ children }: childrenProps) {
   const [user, setUser] = useState<IAccount | null>(null);
   const [account, setAccount] = useState<IAccount | null>(null);
-  const [transactions, setTransactions] = useState<ITransactionInfo[] | null>(
-    null
-  );
+  const [transactions, setTransactions] = useState<ITransactionInfo[]>([]);
   const [error, setError] = useState("");
 
   const createUser = async ({ password, username }: signInData) => {
@@ -67,7 +66,7 @@ export function AuthProvider({ children }: childrenProps) {
     try {
       const { "ngcash-token": token } = parseCookies();
 
-      await api.post(
+      const response = await api.post(
         "/transactions",
         {
           recipient,
@@ -82,13 +81,32 @@ export function AuthProvider({ children }: childrenProps) {
     } catch (err: AxiosError | any) {
       console.log(err.response.data.message);
 
+      if (err.response.data.message === "Customer not found") {
+        setError("Cliente nao encontrado");
+      }
+
       if (
         err.response.data.message === "you cannot make a transfer to yourself"
       ) {
-        setError("Tranferencia invalida");
-      } else {
+        setError("você não pode fazer uma transferência para si mesmo");
+      } else if (err.response.data.message === "insufficient funds") {
         setError("Saldo insuficiente");
       }
+    }
+  };
+
+  const getTransactions = async () => {
+    try {
+      const { "ngcash-token": token } = parseCookies();
+
+      const response = await api.get("/transactions/filter", {
+        headers: {
+          Authorization: token as string,
+        },
+      });
+      setTransactions(response.data);
+    } catch (err: AxiosError | any) {
+      console.log(err);
     }
   };
 
@@ -135,21 +153,6 @@ export function AuthProvider({ children }: childrenProps) {
     }
   };
 
-  const getTransactions = async () => {
-    try {
-      const { "ngcash-token": token } = parseCookies();
-      const response = await api.get("/transactions", {
-        headers: {
-          Authorization: token as string,
-        },
-      });
-      const result = response.data;
-      setTransactions(result);
-    } catch (err: AxiosError | any) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     getUserAccount();
     getTransactions();
@@ -159,11 +162,10 @@ export function AuthProvider({ children }: childrenProps) {
     <AuthContext.Provider
       value={{
         user,
-
         signIn,
         error,
-        account,
         transactions,
+        account,
         createUser,
         newTransaction,
       }}

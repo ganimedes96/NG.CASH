@@ -21,6 +21,8 @@ export const Summary = () => {
     return acc + value.value;
   }, 0);
 
+
+
   return (
     <section className=" w-full max-w-[1120px] mx-auto px-6 mt-28">
       <div className="flex items-center justify-end px-4 mb-8">
