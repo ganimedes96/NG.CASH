@@ -1,8 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
-import jwt from "../utils/jwt";
-import loginService from "../services/login";
+
 
 export default class MiddlewareLogin {
   public validationLogin = async (

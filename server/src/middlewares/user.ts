@@ -25,7 +25,7 @@ export default class CreateUserValidation {
     if (password.length < 8) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    const userAlreadyExists = await users.some(
+    const userAlreadyExists = users.some(
       (user) => user.username === username
     );
 

@@ -1,10 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ArrowCircleDown, ArrowCircleUp } from "phosphor-react";
 import { AuthContext } from "../contexts/AuthContext";
 import { dateFormatter, priceFormatter } from "../lib/Formatter";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { parseCookies } from "nookies";
-import { AxiosError } from "axios";
+
 import { ITransactionInfo } from "../interfaces/ITransaction";
 import { api } from "../lib/axios";
 
@@ -26,7 +26,7 @@ export const TableTRansactions = () => {
         date: date ? date : "",
       },
     });
-    setTransactions( response.data);
+    setTransactions(response.data);
   };
   useEffect(() => {
     getTransactions();

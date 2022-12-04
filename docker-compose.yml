@@ -13,14 +13,33 @@ services:
     # command: bash
     restart: always
     depends_on:
-      - server
-    
+      - backend
+
+   backend:
+    build: ./server
+    container_name: backend-api
+    working_dir: /app/server
+    volumes:
+      - ./server:/app/server
+    stdin_open: true
+    tty: true
+    restart: always 
+    depends_on:
+      - postgres
+    ports:
+      - "3001:3001"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DB_HOST: postgres
+      JWT_SECRET: secretJWT 
+ 
    postgres:
     image: postgres:latest
     container_name: postgres
     hostname: postgres
-    # ports:
-    #   - 5432:5432
+    ports:
+      - 5432:5432
     expose:
       - 5432
     environment:
@@ -45,20 +64,8 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     restart: unless-stopped  
 
-   prisma-postgres-api:
-    stdin_open: true
-    build:
-      context: .
-      dockerfile: ./server
-    container_name: prisma-postgres-api
-    depends_on:
-      - postgres
-    ports:
-      - "3001:3001"
-    environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ngcash_db?schema=public
-      JWT_SECRET: secretJWT 
-    restart: always 
+  
 volumes:
     postgres-data:
     pgadmin-data:   
+

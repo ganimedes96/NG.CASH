@@ -7,7 +7,7 @@
     "test": "mocha -r ts-node/register ./src/tests/*$NAME*.{test,spec}.ts -t 10000 --exit",
     "studio": "npx prisma studio",
     "dev": "npx tsx ./src/server.ts",
-    "start": "npx prisma migrate deploy && ts-node ./src/server.ts"
+    "start": "npx prisma migrate deploy && ts-node ./build/server.js"
   },
   "keywords": [],
   "author": "",
@@ -47,6 +47,7 @@
     "jest": "27.4.3",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
-    "monent": "^0.0.2-security"
+    "monent": "^0.0.2-security",
+    "tsx": "^3.12.1"
   }
 }

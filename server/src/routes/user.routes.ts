@@ -11,12 +11,12 @@ const middlewareUser = new MiddlewareUser();
 const middlewareToken = new MiddlewareToken();
 
 router.post(
-  "/",
+  "/register",
   middlewareUser.userValidation,
   userController.createUser
 );
 router.get(
-  "/",
+  "/account",
   middlewareToken.validationToken,
   userController.getUserAccount
 );

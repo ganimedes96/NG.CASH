@@ -15,4 +15,4 @@ RUN npm install
 ADD . /app-frontend
 
 # A command to start the server
-CMD npm start
+CMD ["npm", "run", "dev"]
