@@ -48,19 +48,6 @@ export default class TransactionController {
     }
   };
 
-  // public getTransaction = async (req: Request, res: Response) => {
-  //   const token = req.headers.authorization;
-  //   const username = tokenUsername(String(token));
-  //   const userData = (await this._userService.getUSer(
-  //     username
-  //   )) as IAccountInfo;
-
-  //   const transactions = (await this._transactionService.getTransactions(
-  //     userData
-  //   )) as IAllTransaction[];
-  //   return res.status(200).json(transactions);
-  // };
-
   public filterTransactions = async (req: Request, res: Response) => {
     try {
       const date = req.query.date as string;

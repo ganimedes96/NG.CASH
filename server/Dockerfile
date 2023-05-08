@@ -17,4 +17,4 @@ ADD . /app
 RUN npx prisma generate
 
 # A command to start the server
-CMD ["npm", "start"]
+CMD ["npm", "run","dev"]

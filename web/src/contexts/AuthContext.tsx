@@ -112,7 +112,7 @@ export function AuthProvider({ children }: childrenProps) {
 
   const signIn = async ({ username, password }: signInData) => {
     try {
-      const userData = await api.post("/login", {
+      const userData = await api.post("/sessions", {
         username,
         password,
       });

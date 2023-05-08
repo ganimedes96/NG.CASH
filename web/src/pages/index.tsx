@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 
 export default function Home() {
@@ -26,7 +25,7 @@ export default function Home() {
       <main>
         <h2 className="font-light text-4xl text-gray-100">NG.CASH</h2>
         <h1 className="mt-14 text-white text-5xl font-bold leading-tight ">
-          A carteira digital que esta revolucionado a nova geração
+          A carteira digital que Está revolucionado a nova geração
         </h1>
         <Player
           autoplay
@@ -39,7 +38,7 @@ export default function Home() {
             <Image src={CheckImg} alt="" />
             <div className="flex flex-col">
               <span className="font-bold text-2xl">+5000</span>
-              <span>Contas criatas</span>
+              <span>Contas criadas</span>
             </div>
           </div>
           <div className="w-px h-14 bg-gray-400" />
@@ -47,7 +46,7 @@ export default function Home() {
             <Image src={CheckImg} alt="" />
             <div className="flex flex-col">
               <span className="font-bold text-2xl">+12000</span>
-              <span>Transferencias</span>
+                <span>Transferências</span>
             </div>
           </div>
         </div>
@@ -65,14 +64,14 @@ export default function Home() {
           className="w-full p-4 mb-4 rounded bg-gray-800 border border-gray-400 text-sm text-gray-100 placeholder:text-gray-300"
           type="text"
           required
-          placeholder="Digite seu username"
+            placeholder="Digite seu nome de usuário"
         />
         <input
           {...register("password")}
           className="w-full p-4  rounded bg-gray-800 border border-gray-400 text-sm text-gray-100 placeholder:text-gray-300"
           type="text"
           required
-          placeholder="Digite sua password"
+          placeholder="Digite sua senha"
         />
         {error && (
           <p className="text-red-600 mt-1">Usuário ou Senha Inválidos</p>
@@ -84,7 +83,7 @@ export default function Home() {
           Entrar
         </button>
         <Link href="/register" className="text-gray-200 text-center mt-2">
-          <p className="mt-4">Ainda nao tem conta? <strong className="text-purple-300">Criar conta!</strong>  </p>
+            <p className="mt-4">Ainda não tem conta? <strong className="text-purple-300">Criar conta!</strong>  </p>
         </Link>
       </form>
     </div>

@@ -27,8 +27,6 @@ export default class TransactionService {
     amount: number
   ): Promise<void> => {
     const prisma = new PrismaClient();
-    console.log("value", amount);
-
     await prisma.accounts.update({
       where: {
         id: String(shippingData.accountId),

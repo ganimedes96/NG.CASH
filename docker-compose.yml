@@ -14,10 +14,12 @@ services:
     restart: always
     depends_on:
       - backend
+    networks:
+      - virtual_wan_Front-to-Back  
 
    backend:
-    build: ./server
     container_name: backend-api
+    build: ./server
     working_dir: /app/server
     volumes:
       - ./server:/app/server
@@ -32,7 +34,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       DB_HOST: postgres
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ngcash_db?schema=public
       JWT_SECRET: secretJWT 
+    networks:
+      - virtual_wan_Front-to-Back
+      - virtual_lan_Back-to-DB  
  
    postgres:
     image: postgres:latest
@@ -50,6 +56,12 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - virtual_lan_Back-to-DB
+      - postgres
+    cap_add:
+      - SYS_NICE  
+
    pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -63,8 +75,11 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     restart: unless-stopped  
-
-  
+networks:
+  virtual_wan_Front-to-Back: {}
+  virtual_lan_Back-to-DB: {}
+  postgres:
+   driver: bridge
 volumes:
     postgres-data:
     pgadmin-data:   
